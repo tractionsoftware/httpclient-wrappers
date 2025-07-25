@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
+  <artifactId>tractionsoftware-httpclient-wrappers-apache-hc</artifactId>
+  <version>1.0</version>
+  <name>Traction Software HTTP Client Wrapper - Apache Commons HttpClient</name>
+  <inceptionYear>2023</inceptionYear>
+  <description>
+    Wrapper for Apache's HttpComponents HttpClient.
+  </description>
+  <url>https://tractionsoftware.com/</url>
+
+  <developers>
+    <developer>
+      <name>Dave Shepperton</name>
+      <id>shep</id>
+      <email>shep@tractionsoftware.com</email>
+      <organization>Traction Software, Inc.</organization>
+      <roles>
+        <role>Java Developer</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>33.4.8-jre</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.18.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
+      <artifactId>tractionsoftware-httpclient-wrappers-api</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/../api/target/tractionsoftware-httpclient-wrappers-api-1.0.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.client5</groupId>
+      <artifactId>httpclient5</artifactId>
+      <version>5.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.httpcomponents.core5</groupId>
+      <artifactId>httpcore5</artifactId>
+      <version>5.3.4</version>
+    </dependency>
+  </dependencies>
+
+  <properties>
+    <maven.compiler.source>21</maven.compiler.source>
+    <maven.compiler.target>21</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+
+</project>
