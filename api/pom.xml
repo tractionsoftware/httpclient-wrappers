@@ -3,30 +3,30 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-  <modelVersion>4.0.0</modelVersion>
+    <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
-    <artifactId>tractionsoftware-httpclient-wrappers-parent</artifactId>
-    <version>1.0.1</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
+    <parent>
+        <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
+        <artifactId>tractionsoftware-httpclient-wrappers-parent</artifactId>
+        <version>1.0.1</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
-  <artifactId>tractionsoftware-httpclient-wrappers-api</artifactId>
-  <name>Traction Software HTTP Client Wrappers - API</name>
-  <description>
-    A small Java library for wrapping one or more HTTP client libraries in a single API.
-  </description>
+    <artifactId>tractionsoftware-httpclient-wrappers-api</artifactId>
+    <name>Traction Software HTTP Client Wrappers - API</name>
+    <description>
+        A small Java library for wrapping one or more HTTP client libraries in a single API.
+    </description>
 
-  <dependencies>
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.commons</groupId>
-      <artifactId>commons-lang3</artifactId>
-    </dependency>
-  </dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>
