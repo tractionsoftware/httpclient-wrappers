@@ -5,46 +5,28 @@
 
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
+  <parent>
+    <groupId>com.tractionsoftware.httpclient-wrappers</groupId>
+    <artifactId>tractionsoftware-httpclient-wrappers-parent</artifactId>
+    <version>1.0.1</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+
   <artifactId>tractionsoftware-httpclient-wrappers-api</artifactId>
-  <version>1.0</version>
-  <name>Traction Software HTTP Client Wrappers</name>
-  <inceptionYear>2023</inceptionYear>
+  <name>Traction Software HTTP Client Wrappers - API</name>
   <description>
     A small Java library for wrapping one or more HTTP client libraries in a single API.
   </description>
-  <url>https://tractionsoftware.com/</url>
-
-  <developers>
-    <developer>
-      <name>Dave Shepperton</name>
-      <id>shep</id>
-      <email>shep@tractionsoftware.com</email>
-      <organization>Traction Software, Inc.</organization>
-      <roles>
-        <role>Java Developer</role>
-      </roles>
-    </developer>
-  </developers>
 
   <dependencies>
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
-      <version>33.4.8-jre</version>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-      <version>3.18.0</version>
     </dependency>
   </dependencies>
-
-  <properties>
-    <maven.compiler.source>21</maven.compiler.source>
-    <maven.compiler.target>21</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-  </properties>
 
 </project>

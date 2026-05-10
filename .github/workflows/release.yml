@@ -1,0 +1,90 @@
+# Releases the project to Maven Central via the Sonatype Central Publishing Portal.
+#
+# Triggers:
+#   - Push of a tag matching v* (e.g. v1.0.1) — the normal release path.
+#   - Manual workflow_dispatch — for ad-hoc dry runs from the Actions UI.
+#
+# Required repository secrets (Settings -> Secrets and variables -> Actions):
+#   CENTRAL_USERNAME  Central Portal user-token username (NOT your portal login).
+#   CENTRAL_PASSWORD  Central Portal user-token password.
+#   GPG_PRIVATE_KEY   ASCII-armored private key:  gpg --armor --export-secret-keys KEYID
+#   GPG_PASSPHRASE    Passphrase for the private key above.
+#
+# The matching public key must be uploaded to a public keyserver
+# (keys.openpgp.org and keyserver.ubuntu.com) so Central can verify signatures.
+
+name: Release to Maven Central
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    name: Build, sign, and publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v6
+
+      - name: Set up JDK 26 + Maven settings.xml + GPG key
+        uses: actions/setup-java@v5
+        with:
+          distribution: corretto
+          java-version: '26'
+          # Wires up ~/.m2/settings.xml with a <server id="central"> entry whose
+          # username/password are read from the env vars below at deploy time.
+          # The id MUST match <publishingServerId>central</publishingServerId>
+          # in the parent POM's release profile.
+          server-id: central
+          server-username: CENTRAL_USERNAME
+          server-password: CENTRAL_PASSWORD
+          # Imports the private key into the runner's GPG keyring and arranges
+          # for maven-gpg-plugin to read the passphrase from $GPG_PASSPHRASE.
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-passphrase: GPG_PASSPHRASE
+          cache: maven
+
+      - name: Verify tag matches POM version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          POM_VERSION=$(mvn -B -N -q \
+            -Dexec.executable=echo \
+            -Dexec.args='${project.version}' \
+            --non-recursive exec:exec)
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          echo "POM version: $POM_VERSION"
+          echo "Tag version: $TAG_VERSION"
+          if [ "$POM_VERSION" != "$TAG_VERSION" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME ($TAG_VERSION) does not match POM version $POM_VERSION"
+            exit 1
+          fi
+
+      - name: Build and deploy
+        run: mvn -B -P release clean deploy
+        env:
+          CENTRAL_USERNAME: ${{ secrets.CENTRAL_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.CENTRAL_PASSWORD }}
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: Summary
+        if: success()
+        run: |
+          {
+            echo "### Release uploaded"
+            echo ""
+            echo "The deployment is sitting in the Central Publishing Portal in **Validated** state."
+            echo "Sign in and click **Publish** to release it:"
+            echo ""
+            echo "https://central.sonatype.com/publishing/deployments"
+            echo ""
+            echo "Once you trust the workflow, flip \`autoPublish\` to \`true\`"
+            echo "in the parent \`pom.xml\` to skip the manual click."
+          } >> "$GITHUB_STEP_SUMMARY"
