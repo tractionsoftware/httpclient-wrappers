@@ -20,6 +20,7 @@ package com.tractionsoftware.http.client.wrappers;
 
 import com.google.common.collect.*;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 
 import java.io.PrintWriter;
 import java.util.*;
@@ -90,7 +91,7 @@ public final class HttpHeaderCollection {
         @Override
         public boolean equals(Object other) {
             if (other instanceof Header otherHeader) {
-                return StringUtils.equalsIgnoreCase(name, otherHeader.name) &&
+                return Strings.CI.equals(name, otherHeader.name) &&
                        Objects.equals(value, otherHeader.value);
             }
             return false;
@@ -114,7 +115,7 @@ public final class HttpHeaderCollection {
         }
 
         public boolean hasName(String name) {
-            return StringUtils.equalsIgnoreCase(this.name, name);
+            return Strings.CI.equals(this.name, name);
         }
 
     }
@@ -161,7 +162,7 @@ public final class HttpHeaderCollection {
 
     /*
      * A list that maintains the order in which the headers were initially inserted, which is presumably the same as the
-     * order in which thea appeared in an HTTP request or response.
+     * order in which they appeared in an HTTP request or response.
      */
     private final LinkedList<Header> list;
 
